@@ -1,33 +1,42 @@
-<div align="center">
-
 # Kashout
 
-**Gamified Micro-Earnings Platform**
+![Kashout](docs/brand/logo.png)
 
-[![License](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
+**An open-source SwiftUI rewards-app prototype.**
 
-</div>
+[MIT license](LICENSE) · [Contributing](CONTRIBUTING.md)
 
-Watch ads. Download apps. Earn rewards. Kashout makes earning pocket money fun through gamified micro-tasks.
+Kashout explores daily rewards, animated reward-box reveals and a points-based
+redemption interface. The source includes onboarding, account screens,
+Firebase integration, rewarded-ad integration and StoreKit subscription code.
 
-## How It Works
+## Current status
 
-1. **Watch** — View short video ads
-2. **Download** — Install featured apps
-3. **Earn** — Collect coins in lootboxes
-4. **Cash Out** — Redeem for gift cards or crypto
+Source prototype, not a ready-to-run app or a live rewards service. The
+repository contains Swift files but no Xcode project, dependency manifest or
+Firebase configuration. Production ad identifiers are placeholders. Payouts,
+backend enforcement and a published app have not been verified.
 
-## Features
+## Explore the source
 
-- Video ad rewards
-- App install bonuses
-- Lootbox mechanics
-- Various payout options
+- `Kashout/Views/`: onboarding, home, rewards, subscriptions and reveal screens.
+- `Kashout/ViewModels/`: authentication and reward-flow state.
+- `Kashout/Services/`: Google Mobile Ads and StoreKit adapters.
+- `Kashout/Models/`: user and reward-box data structures.
+- `Kashout/Config/Constants.swift`: prototype settings and placeholders.
 
-## Status
+A development setup needs a new Xcode SwiftUI app target, these source files,
+and compatible Firebase Core/Auth/Firestore and Google Mobile Ads dependencies.
+Use your own development configuration and test identifiers. Dependency
+versions and end-to-end behavior still need validation before a working build
+can be promised. Never commit service credentials.
 
-Prototype. Not in active development.
+## Contributions
+
+A reproducible Xcode project and pinned dependencies are the first useful
+improvements, followed by automated tests and a documented demo mode. See
+[CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
-MIT
+[MIT](LICENSE). Third-party libraries retain their own licenses.
