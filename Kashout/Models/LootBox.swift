@@ -29,8 +29,15 @@ struct LootBox {
     /// Opens a loot box and returns the result with weighted random rarity
     /// - Returns: A LootBoxResult containing the rarity and points awarded
     static func open() -> LootBoxResult {
-        let rarity = rollRarity()
-        let points = rollPoints(for: rarity)
+        var generator = SystemRandomNumberGenerator()
+        return open(using: &generator)
+    }
+
+    /// Opens a loot box using the given random number generator
+    /// (lets tests use a seeded generator)
+    static func open<G: RandomNumberGenerator>(using generator: inout G) -> LootBoxResult {
+        let rarity = rollRarity(using: &generator)
+        let points = rollPoints(for: rarity, using: &generator)
 
         return LootBoxResult(
             rarity: rarity,
@@ -39,11 +46,19 @@ struct LootBox {
         )
     }
 
-    /// Rolls for rarity using weighted random selection
-    private static func rollRarity() -> LootBoxRarity {
-        let totalWeight = rarityWeights.reduce(0) { $0 + $1.weight }
-        let roll = Int.random(in: 1...totalWeight)
+    /// Sum of all rarity weights
+    static var totalWeight: Int {
+        rarityWeights.reduce(0) { $0 + $1.weight }
+    }
 
+    /// Rolls for rarity using weighted random selection
+    private static func rollRarity<G: RandomNumberGenerator>(using generator: inout G) -> LootBoxRarity {
+        let roll = Int.random(in: 1...totalWeight, using: &generator)
+        return rarity(forRoll: roll)
+    }
+
+    /// Maps a roll in 1...totalWeight to its rarity
+    static func rarity(forRoll roll: Int) -> LootBoxRarity {
         var cumulative = 0
         for (rarity, weight) in rarityWeights {
             cumulative += weight
@@ -57,9 +72,9 @@ struct LootBox {
     }
 
     /// Rolls for points within the rarity's point range
-    private static func rollPoints(for rarity: LootBoxRarity) -> Int {
+    private static func rollPoints<G: RandomNumberGenerator>(for rarity: LootBoxRarity, using generator: inout G) -> Int {
         let range = rarity.pointRange
-        return Int.random(in: range)
+        return Int.random(in: range, using: &generator)
     }
 
     // MARK: - Simulation (for testing/display)
