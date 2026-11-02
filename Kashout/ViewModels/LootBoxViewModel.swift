@@ -69,8 +69,8 @@ class LootBoxViewModel: ObservableObject {
 
     // MARK: - Initialization
 
-    init(authViewModel: AuthViewModel = .shared) {
-        self.authViewModel = authViewModel
+    init(authViewModel: AuthViewModel? = nil) {
+        self.authViewModel = authViewModel ?? .shared
     }
 
     // MARK: - Open Loot Box

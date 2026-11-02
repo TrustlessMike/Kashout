@@ -199,7 +199,7 @@ struct LootBoxHistoryEntry: Codable, Identifiable {
 
 // MARK: - Supporting Types
 
-enum LootBoxRarity: String, Codable {
+enum LootBoxRarity: String, Codable, CaseIterable {
     case common
     case uncommon
     case rare

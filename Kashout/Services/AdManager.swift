@@ -22,7 +22,7 @@ class AdManager: NSObject, ObservableObject {
 
     // MARK: - Private Properties
 
-    private var rewardedAd: GADRewardedAd?
+    private var rewardedAd: RewardedAd?
     private var adCompletionHandler: ((Result<Int, AdError>) -> Void)?
 
     // MARK: - Singleton
@@ -37,7 +37,7 @@ class AdManager: NSObject, ObservableObject {
 
     /// Initialize the Mobile Ads SDK
     func configure() {
-        GADMobileAds.sharedInstance().start { status in
+        MobileAds.shared.start { status in
             print("AdMob SDK initialized")
             // Log adapter status for debugging
             for (adapter, info) in status.adapterStatusesByClassName {
@@ -57,9 +57,9 @@ class AdManager: NSObject, ObservableObject {
 
         let adUnitID = Constants.AdMob.rewardedAdUnitID
 
-        GADRewardedAd.load(
-            withAdUnitID: adUnitID,
-            request: GADRequest()
+        RewardedAd.load(
+            with: adUnitID,
+            request: Request()
         ) { [weak self] ad, error in
             guard let self = self else { return }
 
@@ -107,7 +107,7 @@ class AdManager: NSObject, ObservableObject {
 
         self.adCompletionHandler = completion
 
-        rewardedAd.present(fromRootViewController: topController) { [weak self] in
+        rewardedAd.present(from: topController) { [weak self] in
             guard let self = self else { return }
 
             let points = Constants.AdMob.rewardedAdPoints
@@ -130,11 +130,11 @@ class AdManager: NSObject, ObservableObject {
     }
 }
 
-// MARK: - GADFullScreenContentDelegate
+// MARK: - FullScreenContentDelegate
 
-extension AdManager: GADFullScreenContentDelegate {
+extension AdManager: FullScreenContentDelegate {
 
-    nonisolated func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+    nonisolated func adDidDismissFullScreenContent(_ ad: FullScreenPresentingAd) {
         Task { @MainActor in
             print("Rewarded ad dismissed")
             self.rewardedAd = nil
@@ -144,7 +144,7 @@ extension AdManager: GADFullScreenContentDelegate {
         }
     }
 
-    nonisolated func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+    nonisolated func ad(_ ad: FullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
         Task { @MainActor in
             print("Failed to present rewarded ad: \(error.localizedDescription)")
             self.rewardedAd = nil
@@ -156,7 +156,7 @@ extension AdManager: GADFullScreenContentDelegate {
         }
     }
 
-    nonisolated func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+    nonisolated func adWillPresentFullScreenContent(_ ad: FullScreenPresentingAd) {
         Task { @MainActor in
             print("Rewarded ad will present")
         }

@@ -99,7 +99,7 @@ struct LootBox {
 
 // MARK: - Loot Box Result
 
-struct LootBoxResult {
+struct LootBoxResult: Equatable {
     let rarity: LootBoxRarity
     let points: Int
     let openedAt: Date
@@ -147,9 +147,9 @@ struct LootBoxResult {
     }
 }
 
-// MARK: - LootBoxRarity Extension for CaseIterable
+// MARK: - LootBoxRarity Odds Extension
 
-extension LootBoxRarity: CaseIterable {
+extension LootBoxRarity {
 
     /// Probability of rolling this rarity (as percentage)
     var probability: Int {

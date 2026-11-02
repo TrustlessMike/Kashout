@@ -191,7 +191,7 @@ class StoreManager: ObservableObject {
     // MARK: - Verification
 
     /// Verifies a transaction result
-    private func checkVerified<T>(_ result: VerificationResult<T>) throws -> T {
+    private nonisolated func checkVerified<T>(_ result: VerificationResult<T>) throws -> T {
         switch result {
         case .unverified(_, let error):
             throw StoreError.verificationFailed(error.localizedDescription)
@@ -224,7 +224,7 @@ class StoreManager: ObservableObject {
             if let status = await subscriptionStatus(for: productID),
                case .verified(let renewalInfo) = status.renewalInfo,
                status.state == .subscribed {
-                return renewalInfo.expirationDate
+                return renewalInfo.renewalDate
             }
         }
         return nil
