@@ -25,11 +25,15 @@ class AdManager: NSObject, ObservableObject {
     private var rewardedAd: RewardedAd?
     private var adCompletionHandler: ((Result<Int, AdError>) -> Void)?
 
+    /// Demo mode shows a simulated ad and never contacts an ad network
+    let isDemoMode: Bool
+
     // MARK: - Singleton
 
     static let shared = AdManager()
 
-    private override init() {
+    init(environment: AppEnvironment = .current) {
+        isDemoMode = environment.isDemo
         super.init()
     }
 
@@ -37,6 +41,11 @@ class AdManager: NSObject, ObservableObject {
 
     /// Initialize the Mobile Ads SDK
     func configure() {
+        guard !isDemoMode else {
+            isAdReady = true
+            return
+        }
+
         MobileAds.shared.start { status in
             print("AdMob SDK initialized")
             // Log adapter status for debugging
@@ -50,6 +59,10 @@ class AdManager: NSObject, ObservableObject {
 
     /// Preloads a rewarded ad for faster display
     func loadRewardedAd() {
+        guard !isDemoMode else {
+            isAdReady = true
+            return
+        }
         guard !isLoading else { return }
 
         isLoading = true
@@ -86,6 +99,11 @@ class AdManager: NSObject, ObservableObject {
     /// Shows the rewarded ad and returns points on completion
     /// - Parameter completion: Callback with points earned or error
     func showRewardedAd(completion: @escaping (Result<Int, AdError>) -> Void) {
+        if isDemoMode {
+            showDemoRewardedAd(completion: completion)
+            return
+        }
+
         guard let rewardedAd = rewardedAd else {
             completion(.failure(.notReady))
             // Try to load another ad for next time
@@ -93,16 +111,9 @@ class AdManager: NSObject, ObservableObject {
             return
         }
 
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let rootViewController = windowScene.windows.first?.rootViewController else {
+        guard let topController = topViewController() else {
             completion(.failure(.noViewController))
             return
-        }
-
-        // Find the topmost presented view controller
-        var topController = rootViewController
-        while let presented = topController.presentedViewController {
-            topController = presented
         }
 
         self.adCompletionHandler = completion
@@ -118,6 +129,49 @@ class AdManager: NSObject, ObservableObject {
                 self.adCompletionHandler = nil
             }
         }
+    }
+
+    // MARK: - Demo Ad
+
+    /// Presents a local stand-in for a rewarded video (demo mode only)
+    private func showDemoRewardedAd(completion: @escaping (Result<Int, AdError>) -> Void) {
+        guard let topController = topViewController() else {
+            completion(.failure(.noViewController))
+            return
+        }
+
+        var hostingController: UIViewController?
+        let adView = DemoRewardedAdView { rewardEarned in
+            hostingController?.dismiss(animated: true) {
+                if rewardEarned {
+                    completion(.success(Constants.AdMob.rewardedAdPoints))
+                } else {
+                    completion(.failure(.userCancelled))
+                }
+            }
+            hostingController = nil
+        }
+
+        let controller = UIHostingController(rootView: adView)
+        controller.modalPresentationStyle = .fullScreen
+        hostingController = controller
+        topController.present(controller, animated: true)
+    }
+
+    // MARK: - Presentation Helper
+
+    /// Finds the topmost presented view controller
+    private func topViewController() -> UIViewController? {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let rootViewController = windowScene.windows.first?.rootViewController else {
+            return nil
+        }
+
+        var topController = rootViewController
+        while let presented = topController.presentedViewController {
+            topController = presented
+        }
+        return topController
     }
 
     // MARK: - Availability Check

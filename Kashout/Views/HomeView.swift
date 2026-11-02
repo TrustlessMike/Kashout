@@ -38,6 +38,10 @@ struct HomeView: View {
                 ScrollView {
                     VStack(spacing: 24) {
 
+                        if adManager.isDemoMode {
+                            DemoModeBanner()
+                        }
+
                         // Points Display
                         pointsCard
 
@@ -111,6 +115,14 @@ struct HomeView: View {
             .onChange(of: viewModel.currentResult) { _, newResult in
                 if newResult != nil {
                     showReveal = true
+                }
+            }
+            .onChange(of: storeManager.isProSubscriber) { _, isPro in
+                // Keep the user's Pro flag (bonus and cooldowns) in sync
+                if viewModel.user?.isPro != isPro {
+                    Task {
+                        await viewModel.updateProStatus(isPro: isPro)
+                    }
                 }
             }
         }

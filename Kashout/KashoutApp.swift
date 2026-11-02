@@ -20,10 +20,15 @@ struct KashoutApp: App {
     // MARK: - Initialization
 
     init() {
-        // Configure Firebase
-        FirebaseApp.configure()
+        // Configure Firebase (skipped in demo mode, which has no
+        // GoogleService-Info.plist and runs on local data)
+        if AppEnvironment.current == .firebase {
+            FirebaseApp.configure()
+        } else {
+            print("Kashout: running in demo mode with local in-memory data")
+        }
 
-        // Configure AdMob
+        // Configure AdMob (demo mode uses a simulated ad instead)
         AdManager.shared.configure()
     }
 

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import StoreKit
 
 struct SubscriptionView: View {
 
@@ -15,7 +14,7 @@ struct SubscriptionView: View {
     @StateObject private var storeManager = StoreManager.shared
     @Environment(\.dismiss) private var dismiss
 
-    @State private var selectedProduct: Product?
+    @State private var selectedPlanID: String?
     @State private var showError = false
     @State private var errorMessage = ""
 
@@ -75,7 +74,12 @@ struct SubscriptionView: View {
         }
         .onAppear {
             // Select monthly by default
-            selectedProduct = storeManager.monthlyProduct
+            selectedPlanID = storeManager.plans.first?.id
+        }
+        .onChange(of: storeManager.plans) { _, plans in
+            if selectedPlanID == nil {
+                selectedPlanID = plans.first?.id
+            }
         }
     }
 
@@ -156,30 +160,25 @@ struct SubscriptionView: View {
             Text("Choose Your Plan")
                 .font(.headline)
 
-            // Monthly Option
-            if let monthly = storeManager.monthlyProduct {
+            // Monthly and yearly options
+            ForEach(storeManager.plans) { plan in
                 SubscriptionOption(
-                    product: monthly,
-                    isSelected: selectedProduct?.id == monthly.id,
-                    isBestValue: false
+                    plan: plan,
+                    isSelected: selectedPlanID == plan.id
                 ) {
-                    selectedProduct = monthly
+                    selectedPlanID = plan.id
                 }
             }
 
-            // Yearly Option (if available)
-            if let yearly = storeManager.yearlyProduct {
-                SubscriptionOption(
-                    product: yearly,
-                    isSelected: selectedProduct?.id == yearly.id,
-                    isBestValue: true
-                ) {
-                    selectedProduct = yearly
-                }
+            if storeManager.isDemoMode {
+                Text("Demo mode: subscribing unlocks Pro on this device only. Nothing is charged.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
             }
 
             // If no products loaded
-            if storeManager.products.isEmpty && !storeManager.isLoading {
+            if storeManager.plans.isEmpty && !storeManager.isLoading {
                 VStack(spacing: 8) {
                     Image(systemName: "exclamationmark.triangle")
                         .font(.title)
@@ -212,8 +211,8 @@ struct SubscriptionView: View {
                 Text("Subscribe Now")
                     .fontWeight(.bold)
 
-                if let product = selectedProduct {
-                    Text("- \(product.displayPrice)")
+                if let plan = selectedPlan {
+                    Text("- \(plan.displayPrice)")
                 }
             }
             .font(.headline)
@@ -222,14 +221,18 @@ struct SubscriptionView: View {
             .padding()
             .background(
                 LinearGradient(
-                    colors: selectedProduct != nil ? [.purple, .pink] : [.gray, .gray],
+                    colors: selectedPlan != nil ? [.purple, .pink] : [.gray, .gray],
                     startPoint: .leading,
                     endPoint: .trailing
                 )
             )
             .cornerRadius(12)
         }
-        .disabled(selectedProduct == nil || storeManager.isLoading)
+        .disabled(selectedPlan == nil || storeManager.isLoading)
+    }
+
+    private var selectedPlan: SubscriptionPlan? {
+        storeManager.plans.first { $0.id == selectedPlanID }
     }
 
     // MARK: - Footer Section
@@ -290,10 +293,10 @@ struct SubscriptionView: View {
     // MARK: - Actions
 
     private func performPurchase() {
-        guard let product = selectedProduct else { return }
+        guard let plan = selectedPlan else { return }
 
         Task {
-            let success = await storeManager.purchase(product)
+            let success = await storeManager.purchase(planID: plan.id)
 
             if success {
                 dismiss()
@@ -340,9 +343,8 @@ struct BenefitRow: View {
 // MARK: - Subscription Option
 
 struct SubscriptionOption: View {
-    let product: Product
+    let plan: SubscriptionPlan
     let isSelected: Bool
-    let isBestValue: Bool
     let onSelect: () -> Void
 
     var body: some View {
@@ -350,10 +352,10 @@ struct SubscriptionOption: View {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
                     HStack {
-                        Text(product.periodDescription ?? "Subscription")
+                        Text(plan.title)
                             .font(.headline)
 
-                        if isBestValue {
+                        if plan.isBestValue {
                             Text("BEST VALUE")
                                 .font(.caption2.bold())
                                 .foregroundColor(.white)
@@ -364,7 +366,7 @@ struct SubscriptionOption: View {
                         }
                     }
 
-                    Text(product.displayPrice)
+                    Text(plan.displayPrice)
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }

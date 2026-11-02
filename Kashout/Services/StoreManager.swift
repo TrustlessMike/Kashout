@@ -38,6 +38,19 @@ class StoreManager: ObservableObject {
         products.first { $0.id == Constants.StoreKit.proYearlyProductID }
     }
 
+    /// Plans to offer: App Store products, or local demo plans in demo mode
+    var plans: [SubscriptionPlan] {
+        if isDemoMode {
+            return SubscriptionPlan.demoPlans
+        }
+        return [monthlyProduct, yearlyProduct]
+            .compactMap { $0 }
+            .map(SubscriptionPlan.init(product:))
+    }
+
+    /// Demo mode simulates purchases locally instead of using StoreKit
+    let isDemoMode: Bool
+
     // MARK: - Private Properties
 
     private var updateListenerTask: Task<Void, Error>?
@@ -50,7 +63,12 @@ class StoreManager: ObservableObject {
 
     static let shared = StoreManager()
 
-    private init() {
+    init(environment: AppEnvironment = .current) {
+        isDemoMode = environment.isDemo
+
+        // Demo mode never talks to the App Store
+        guard !isDemoMode else { return }
+
         // Start listening for transaction updates
         updateListenerTask = listenForTransactions()
 
@@ -129,10 +147,30 @@ class StoreManager: ObservableObject {
         }
     }
 
+    /// Purchases a plan by product ID. In demo mode this only unlocks Pro
+    /// locally; nothing is charged and no App Store request is made.
+    @discardableResult
+    func purchase(planID: String) async -> Bool {
+        if isDemoMode {
+            purchasedProductIDs.insert(planID)
+            return true
+        }
+
+        guard let product = products.first(where: { $0.id == planID }) else {
+            lastError = .productLoadFailed("This plan is not available right now.")
+            return false
+        }
+
+        return await purchase(product)
+    }
+
     // MARK: - Restore Purchases
 
     /// Restores previously purchased subscriptions
     func restorePurchases() async {
+        // Demo purchases only live in memory
+        guard !isDemoMode else { return }
+
         isLoading = true
         lastError = nil
 
@@ -254,6 +292,48 @@ enum StoreError: Error, LocalizedError {
             return "Transaction verification failed: \(message)"
         }
     }
+}
+
+// MARK: - Subscription Plan
+
+/// What the subscription screen shows for one plan
+struct SubscriptionPlan: Identifiable, Equatable {
+    let id: String
+    let title: String
+    let displayPrice: String
+    let isBestValue: Bool
+
+    init(id: String, title: String, displayPrice: String, isBestValue: Bool) {
+        self.id = id
+        self.title = title
+        self.displayPrice = displayPrice
+        self.isBestValue = isBestValue
+    }
+
+    init(product: Product) {
+        self.init(
+            id: product.id,
+            title: product.periodDescription ?? "Subscription",
+            displayPrice: product.displayPrice,
+            isBestValue: product.id == Constants.StoreKit.proYearlyProductID
+        )
+    }
+
+    /// Local plans for demo mode, priced from Constants
+    static let demoPlans: [SubscriptionPlan] = [
+        SubscriptionPlan(
+            id: Constants.StoreKit.proMonthlyProductID,
+            title: "Monthly",
+            displayPrice: Constants.StoreKit.proMonthlyPrice,
+            isBestValue: false
+        ),
+        SubscriptionPlan(
+            id: Constants.StoreKit.proYearlyProductID,
+            title: "Yearly",
+            displayPrice: Constants.StoreKit.proYearlyPrice,
+            isBestValue: true
+        )
+    ]
 }
 
 // MARK: - Product Extensions

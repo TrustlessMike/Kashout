@@ -128,6 +128,23 @@ enum Constants {
         static let proYearlyPrice = "$39.99"
     }
 
+    // MARK: - Demo Mode
+
+    /// Settings for the local demo mode (no GoogleService-Info.plist)
+    enum Demo {
+        /// Ready-made demo account (exists only in memory)
+        static let accountEmail = "demo@kashout.test"
+
+        /// Demo account's state (must not be restricted)
+        static let accountState = "CA"
+
+        /// Demo account's starting balance, enough to explore redemption
+        static let startingPoints = 10_000
+
+        /// Seconds a simulated rewarded ad runs before the reward unlocks
+        static let simulatedAdSeconds = 3
+    }
+
     // MARK: - Firebase Collections
 
     enum Firebase {

@@ -6,8 +6,6 @@
 //
 
 import Foundation
-import FirebaseAuth
-import FirebaseFirestore
 
 // MARK: - Auth State
 
@@ -78,35 +76,34 @@ class AuthViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
 
-    // MARK: - Private Properties
+    // MARK: - Backend
 
-    private let auth = Auth.auth()
-    private let db = Firestore.firestore()
-    private var authStateListener: AuthStateDidChangeListenerHandle?
+    /// Firebase in normal builds, in-memory data in demo mode
+    let backend: KashoutBackend
+
+    /// Whether the app is running on local demo data
+    var isDemoMode: Bool {
+        backend is DemoBackend
+    }
 
     // MARK: - Singleton
 
-    static let shared = AuthViewModel()
+    static let shared = AuthViewModel(backend: AppEnvironment.current.makeBackend())
 
-    private init() {
+    init(backend: KashoutBackend) {
+        self.backend = backend
         setupAuthStateListener()
-    }
-
-    deinit {
-        if let listener = authStateListener {
-            auth.removeStateDidChangeListener(listener)
-        }
     }
 
     // MARK: - Auth State Listener
 
     private func setupAuthStateListener() {
-        authStateListener = auth.addStateDidChangeListener { [weak self] _, firebaseUser in
+        backend.observeAuthState { [weak self] uid in
             guard let self = self else { return }
 
             Task { @MainActor in
-                if let firebaseUser = firebaseUser {
-                    await self.fetchUser(uid: firebaseUser.uid)
+                if let uid = uid {
+                    await self.fetchUser(uid: uid)
                 } else {
                     self.authState = .unauthenticated
                 }
@@ -130,29 +127,21 @@ class AuthViewModel: ObservableObject {
 
         isLoading = true
         errorMessage = nil
+        defer { isLoading = false }
 
-        do {
-            // Create Firebase Auth user
-            let result = try await auth.createUser(withEmail: email, password: password)
+        // Create the account
+        let uid = try await backend.createAccount(email: email, password: password)
 
-            // Create user document in Firestore
-            let newUser = User(
-                id: result.user.uid,
-                email: email,
-                state: state
-            )
+        // Create the user document
+        let newUser = User(
+            id: uid,
+            email: email,
+            state: state
+        )
 
-            try db.collection(Constants.Firebase.usersCollection)
-                .document(result.user.uid)
-                .setData(from: newUser)
+        try await backend.saveUser(newUser)
 
-            authState = .authenticated(newUser)
-            isLoading = false
-
-        } catch let error as NSError {
-            isLoading = false
-            throw mapFirebaseError(error)
-        }
+        authState = .authenticated(newUser)
     }
 
     // MARK: - Sign In
@@ -164,40 +153,36 @@ class AuthViewModel: ObservableObject {
     func signIn(email: String, password: String) async throws {
         isLoading = true
         errorMessage = nil
+        defer { isLoading = false }
 
-        do {
-            let result = try await auth.signIn(withEmail: email, password: password)
-            await fetchUser(uid: result.user.uid)
-            isLoading = false
+        let uid = try await backend.signIn(email: email, password: password)
+        await fetchUser(uid: uid)
+    }
 
-        } catch let error as NSError {
-            isLoading = false
-            throw mapFirebaseError(error)
+    /// Signs in the ready-made demo account (demo mode only)
+    func signInDemoAccount() async throws {
+        guard let demoBackend = backend as? DemoBackend else {
+            throw AuthError.unknown("The demo account is only available in demo mode.")
         }
+
+        let uid = try demoBackend.signInDemoAccount()
+        await fetchUser(uid: uid)
     }
 
     // MARK: - Sign Out
 
     /// Signs out the current user
     func signOut() throws {
-        do {
-            try auth.signOut()
-            authState = .unauthenticated
-        } catch {
-            throw AuthError.unknown(error.localizedDescription)
-        }
+        try backend.signOut()
+        authState = .unauthenticated
     }
 
     // MARK: - Fetch User
 
-    /// Fetches the user document from Firestore
+    /// Fetches the user document from the backend
     private func fetchUser(uid: String) async {
         do {
-            let document = try await db.collection(Constants.Firebase.usersCollection)
-                .document(uid)
-                .getDocument()
-
-            guard let user = try? document.data(as: User.self) else {
+            guard let user = try await backend.fetchUser(uid: uid) else {
                 authState = .unauthenticated
                 return
             }
@@ -218,13 +203,11 @@ class AuthViewModel: ObservableObject {
 
     // MARK: - Update User
 
-    /// Updates the user document in Firestore
+    /// Updates the user document in the backend
     func updateUser(_ user: User) async throws {
-        guard let uid = user.id else { return }
+        guard user.id != nil else { return }
 
-        try db.collection(Constants.Firebase.usersCollection)
-            .document(uid)
-            .setData(from: user, merge: true)
+        try await backend.saveUser(user)
 
         if case .authenticated = authState {
             authState = .authenticated(user)
@@ -235,68 +218,22 @@ class AuthViewModel: ObservableObject {
 
     /// Sends a password reset email
     func sendPasswordReset(email: String) async throws {
-        do {
-            try await auth.sendPasswordReset(withEmail: email)
-        } catch let error as NSError {
-            throw mapFirebaseError(error)
-        }
+        try await backend.sendPasswordReset(email: email)
     }
 
     // MARK: - Delete Account
 
     /// Deletes the user's account and data
     func deleteAccount() async throws {
-        guard let firebaseUser = auth.currentUser,
-              let uid = firebaseUser.uid as String? else {
-            throw AuthError.userNotFound
-        }
-
-        do {
-            // Delete user document from Firestore
-            try await db.collection(Constants.Firebase.usersCollection)
-                .document(uid)
-                .delete()
-
-            // Delete Firebase Auth account
-            try await firebaseUser.delete()
-
-            authState = .unauthenticated
-
-        } catch let error as NSError {
-            throw mapFirebaseError(error)
-        }
-    }
-
-    // MARK: - Error Mapping
-
-    private func mapFirebaseError(_ error: NSError) -> AuthError {
-        guard let errorCode = AuthErrorCode.Code(rawValue: error.code) else {
-            return .unknown(error.localizedDescription)
-        }
-
-        switch errorCode {
-        case .invalidEmail:
-            return .invalidEmail
-        case .weakPassword:
-            return .weakPassword
-        case .emailAlreadyInUse:
-            return .emailInUse
-        case .userNotFound:
-            return .userNotFound
-        case .wrongPassword:
-            return .wrongPassword
-        case .networkError:
-            return .networkError
-        default:
-            return .unknown(error.localizedDescription)
-        }
+        try await backend.deleteCurrentAccount()
+        authState = .unauthenticated
     }
 
     // MARK: - Refresh User
 
-    /// Refreshes the current user data from Firestore
+    /// Refreshes the current user data from the backend
     func refreshUser() async {
-        guard let uid = auth.currentUser?.uid else { return }
+        guard let uid = backend.currentUserID else { return }
         await fetchUser(uid: uid)
     }
 }

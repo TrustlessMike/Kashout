@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import FirebaseFirestore
 
 // MARK: - Loot Box View Model
 
@@ -24,8 +23,11 @@ class LootBoxViewModel: ObservableObject {
 
     // MARK: - Private Properties
 
-    private let db = Firestore.firestore()
     private let authViewModel: AuthViewModel
+
+    private var backend: KashoutBackend {
+        authViewModel.backend
+    }
 
     // MARK: - Computed Properties
 
@@ -96,7 +98,7 @@ class LootBoxViewModel: ObservableObject {
         user.lastLootBoxOpen = Date()
 
         do {
-            // Save to Firestore
+            // Save to the backend
             try await saveUser(user)
 
             // Record history
@@ -201,10 +203,13 @@ class LootBoxViewModel: ObservableObject {
             try await saveUser(user)
 
             // Save redemption request
-            try db.collection(Constants.Firebase.redemptionsCollection)
-                .addDocument(from: redemption)
+            try await backend.addRedemption(redemption)
 
-            successMessage = "Redemption submitted! You'll receive your \(giftCardType.rawValue) gift card within 24-48 hours."
+            if authViewModel.isDemoMode {
+                successMessage = "Demo redemption recorded on this device only. No gift card is issued in demo mode."
+            } else {
+                successMessage = "Redemption submitted! You'll receive your \(giftCardType.rawValue) gift card within 24-48 hours."
+            }
             isProcessingRedemption = false
 
             // Refresh redemption history
@@ -225,15 +230,7 @@ class LootBoxViewModel: ObservableObject {
         guard let userId = user?.id else { return }
 
         do {
-            let snapshot = try await db.collection(Constants.Firebase.redemptionsCollection)
-                .whereField("userId", isEqualTo: userId)
-                .order(by: "createdAt", descending: true)
-                .limit(to: 50)
-                .getDocuments()
-
-            redemptionHistory = snapshot.documents.compactMap {
-                try? $0.data(as: Redemption.self)
-            }
+            redemptionHistory = try await backend.fetchRedemptions(userId: userId, limit: 50)
         } catch {
             print("Failed to fetch redemption history: \(error)")
         }
@@ -257,19 +254,16 @@ class LootBoxViewModel: ObservableObject {
     // MARK: - Private Helpers
 
     private func saveUser(_ user: User) async throws {
-        guard let uid = user.id else { return }
+        guard user.id != nil else { return }
 
-        try db.collection(Constants.Firebase.usersCollection)
-            .document(uid)
-            .setData(from: user, merge: true)
+        try await backend.saveUser(user)
 
         // Refresh auth state
         await authViewModel.refreshUser()
     }
 
     private func saveHistoryEntry(_ entry: LootBoxHistoryEntry) async throws {
-        try db.collection(Constants.Firebase.lootBoxHistoryCollection)
-            .addDocument(from: entry)
+        try await backend.addHistoryEntry(entry)
     }
 
     // MARK: - Clear Messages

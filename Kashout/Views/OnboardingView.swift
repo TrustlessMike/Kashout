@@ -45,6 +45,11 @@ struct OnboardingView: View {
                     // Toggle Sign Up / Sign In
                     toggleButton
 
+                    // Demo mode shortcut
+                    if authViewModel.isDemoMode {
+                        demoAccountButton
+                    }
+
                     Spacer(minLength: 40)
                 }
                 .padding(.top, 60)
@@ -80,6 +85,10 @@ struct OnboardingView: View {
             Text(isSignUp ? "Create your account" : "Welcome back!")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
+
+            if authViewModel.isDemoMode {
+                DemoModeBanner()
+            }
         }
     }
 
@@ -226,6 +235,27 @@ struct OnboardingView: View {
         }
     }
 
+    // MARK: - Demo Account Button
+
+    private var demoAccountButton: some View {
+        Button(action: performDemoSignIn) {
+            HStack {
+                Image(systemName: "person.crop.circle.badge.checkmark")
+                Text("Continue with Demo Account")
+                    .fontWeight(.semibold)
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
+            .foregroundColor(.purple)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color.purple, lineWidth: 1.5)
+            )
+        }
+        .padding(.horizontal)
+        .accessibilityIdentifier("demoAccountButton")
+    }
+
     // MARK: - Validation
 
     private var canSignUp: Bool {
@@ -264,6 +294,17 @@ struct OnboardingView: View {
                     email: email.trimmingCharacters(in: .whitespaces),
                     password: password
                 )
+            } catch {
+                errorMessage = error.localizedDescription
+                showError = true
+            }
+        }
+    }
+
+    private func performDemoSignIn() {
+        Task {
+            do {
+                try await authViewModel.signInDemoAccount()
             } catch {
                 errorMessage = error.localizedDescription
                 showError = true
