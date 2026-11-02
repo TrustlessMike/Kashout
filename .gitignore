@@ -18,14 +18,18 @@ xcuserdata/
 !default.xcworkspace
 
 # Swift Package Manager
+# Kashout.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+# is committed so dependency versions stay pinned.
 .build/
 .swiftpm/
-Package.resolved
 
 # CocoaPods
 Pods/
 Podfile.lock
 *.xcworkspace
+
+# Keep the project's own workspace (it holds the pinned Package.resolved)
+!Kashout.xcodeproj/project.xcworkspace/
 
 # Fastlane
 fastlane/report.xml
@@ -33,7 +37,7 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 
-# Firebase
+# Firebase (copy GoogleService-Info.plist.example for the expected shape)
 GoogleService-Info.plist
 
 # Environment

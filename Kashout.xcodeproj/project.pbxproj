@@ -1,0 +1,603 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0226930A7D93330ABFD41D99 /* DemoModeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B6A721222608D3E50966B5 /* DemoModeTests.swift */; };
+		10F0EEBCEE296376F70465E5 /* DemoModeViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA8990E6B4F8B6FA60969F9 /* DemoModeViews.swift */; };
+		115E81B9B9699921E63B2C7B /* AdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153C338CC4AE091AD760873D /* AdManager.swift */; };
+		1DBC599F3BC34FBD4A7B6F8C /* UserRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0D627A41C74649C092DD07 /* UserRulesTests.swift */; };
+		1E256D903FD0B46E267BB16F /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480BD6E246B1DDC839235B1E /* AuthViewModel.swift */; };
+		21B1121F32E8280592867C44 /* LootBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D116F96BFC6BBE9570CC9FC5 /* LootBox.swift */; };
+		2D4FBC88E1A9212DB64F9A72 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3881D3D824149D9217A690A /* User.swift */; };
+		31D3F159C99ACB1586609CA6 /* LootBoxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77E0BB046D44FBF00B899AA /* LootBoxViewModel.swift */; };
+		37249616EC0D3973F798C0E3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A841AA6A6C7C49910B0FF24 /* HomeView.swift */; };
+		4D54A79BC8549B4CBF50A156 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF52E7EC549F52A98A49D9BC /* OnboardingView.swift */; };
+		62C1B928E79A4CC3D46E91F4 /* FirebaseBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C031DF73C16C02DC3499CB6 /* FirebaseBackend.swift */; };
+		679C125B4500E61286C90E5A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E244E7010F130A754933D8 /* Constants.swift */; };
+		6BDECBCD2FD9F66C4A4C4AE6 /* LootBoxRevealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AC950338DCEF95A5A50FE4 /* LootBoxRevealView.swift */; };
+		6FD308D2F0420B700D4C8460 /* DemoBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EB2361B98FD56D63517DC9 /* DemoBackend.swift */; };
+		719EA44C982D6A6E910B92D0 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D500D4EB666AE8FBB732B862 /* AppEnvironment.swift */; };
+		991FB5015A53513024D4AD47 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B5A684540C776C9C89A95A /* SettingsView.swift */; };
+		A2D4492931ED0445368FE2DD /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 4A57DDF3ED8AE6AA807A4642 /* FirebaseAuth */; };
+		A70A72B93241DDE52EDE1073 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F39BD1ABAADB087E1C2D19D /* StoreManager.swift */; };
+		B4DEB246E96E6D0486FD9BBE /* KashoutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46466820A9B9D8AD04D6412A /* KashoutApp.swift */; };
+		B69668480A540304C0A08FD8 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 3C782FFFD7D9AB6FC5971782 /* FirebaseCore */; };
+		BDCF469AEF214B511A409919 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = DA3F1C2A3B4832916AEE89F8 /* FirebaseFirestore */; };
+		CE126F655356440EDC84563A /* KashoutBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA2003BFFBF87D9A98A585A /* KashoutBackend.swift */; };
+		D8AA1A7FC6EB807EE3483689 /* LootBoxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A52C321D764864EF4335FC /* LootBoxTests.swift */; };
+		E30A7E8337335727FE83B345 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = DCA14FC414FD1291DF198D1A /* GoogleMobileAds */; };
+		E8642FBB1F530CEDDE02B802 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F454C79DB50465659FFA11 /* SubscriptionView.swift */; };
+		F9C21431306E8FA0D5A2BBFC /* RewardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D078A2A5ED3C7FA9E9CAE673 /* RewardsView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		85203CAC483E33B74E8D2B37 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5B8346F8BF9EAE0A56B38620 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BDAFC3541EF40B3D3714A006;
+			remoteInfo = Kashout;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0BA2003BFFBF87D9A98A585A /* KashoutBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KashoutBackend.swift; sourceTree = "<group>"; };
+		0F39BD1ABAADB087E1C2D19D /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
+		153C338CC4AE091AD760873D /* AdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdManager.swift; sourceTree = "<group>"; };
+		19A52C321D764864EF4335FC /* LootBoxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LootBoxTests.swift; sourceTree = "<group>"; };
+		1FA8990E6B4F8B6FA60969F9 /* DemoModeViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoModeViews.swift; sourceTree = "<group>"; };
+		3C031DF73C16C02DC3499CB6 /* FirebaseBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseBackend.swift; sourceTree = "<group>"; };
+		4466AD981D8667BD53F0AAAF /* Kashout.storekit */ = {isa = PBXFileReference; path = Kashout.storekit; sourceTree = "<group>"; };
+		46466820A9B9D8AD04D6412A /* KashoutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KashoutApp.swift; sourceTree = "<group>"; };
+		47AFF547AC2637F920221B18 /* Kashout.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Kashout.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		480BD6E246B1DDC839235B1E /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		63EB2361B98FD56D63517DC9 /* DemoBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoBackend.swift; sourceTree = "<group>"; };
+		71B6A721222608D3E50966B5 /* DemoModeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoModeTests.swift; sourceTree = "<group>"; };
+		79B5A684540C776C9C89A95A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		8722A583DF46C26E6ACD1784 /* KashoutTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = KashoutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		87F454C79DB50465659FFA11 /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
+		8A841AA6A6C7C49910B0FF24 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		90E244E7010F130A754933D8 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		AE0D627A41C74649C092DD07 /* UserRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRulesTests.swift; sourceTree = "<group>"; };
+		B77E0BB046D44FBF00B899AA /* LootBoxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LootBoxViewModel.swift; sourceTree = "<group>"; };
+		B9AC950338DCEF95A5A50FE4 /* LootBoxRevealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LootBoxRevealView.swift; sourceTree = "<group>"; };
+		D078A2A5ED3C7FA9E9CAE673 /* RewardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardsView.swift; sourceTree = "<group>"; };
+		D116F96BFC6BBE9570CC9FC5 /* LootBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LootBox.swift; sourceTree = "<group>"; };
+		D500D4EB666AE8FBB732B862 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
+		E3881D3D824149D9217A690A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		FF52E7EC549F52A98A49D9BC /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9B47C79EC21DB3050947BB10 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B69668480A540304C0A08FD8 /* FirebaseCore in Frameworks */,
+				A2D4492931ED0445368FE2DD /* FirebaseAuth in Frameworks */,
+				BDCF469AEF214B511A409919 /* FirebaseFirestore in Frameworks */,
+				E30A7E8337335727FE83B345 /* GoogleMobileAds in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0B7DE72A0738CC8A609BBFB2 = {
+			isa = PBXGroup;
+			children = (
+				4466AD981D8667BD53F0AAAF /* Kashout.storekit */,
+				6BC152A3C0A7E9941049D9A7 /* Kashout */,
+				EB6DFC528BC40380DA118634 /* KashoutTests */,
+				94A6696DD3843870C8CA015C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		453C138AF7D36B3E2ECAF8A7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D116F96BFC6BBE9570CC9FC5 /* LootBox.swift */,
+				E3881D3D824149D9217A690A /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4915074BC6E0A961ECDA5BB1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1FA8990E6B4F8B6FA60969F9 /* DemoModeViews.swift */,
+				8A841AA6A6C7C49910B0FF24 /* HomeView.swift */,
+				B9AC950338DCEF95A5A50FE4 /* LootBoxRevealView.swift */,
+				FF52E7EC549F52A98A49D9BC /* OnboardingView.swift */,
+				D078A2A5ED3C7FA9E9CAE673 /* RewardsView.swift */,
+				79B5A684540C776C9C89A95A /* SettingsView.swift */,
+				87F454C79DB50465659FFA11 /* SubscriptionView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5C8CD906D13CB931F1447EB7 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				D500D4EB666AE8FBB732B862 /* AppEnvironment.swift */,
+				90E244E7010F130A754933D8 /* Constants.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		6BC152A3C0A7E9941049D9A7 /* Kashout */ = {
+			isa = PBXGroup;
+			children = (
+				46466820A9B9D8AD04D6412A /* KashoutApp.swift */,
+				5C8CD906D13CB931F1447EB7 /* Config */,
+				453C138AF7D36B3E2ECAF8A7 /* Models */,
+				D0FD17AAFF3712813DA69E03 /* Services */,
+				E0B46910255297A5C7C039BF /* ViewModels */,
+				4915074BC6E0A961ECDA5BB1 /* Views */,
+			);
+			path = Kashout;
+			sourceTree = "<group>";
+		};
+		94A6696DD3843870C8CA015C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				47AFF547AC2637F920221B18 /* Kashout.app */,
+				8722A583DF46C26E6ACD1784 /* KashoutTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D0FD17AAFF3712813DA69E03 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				153C338CC4AE091AD760873D /* AdManager.swift */,
+				63EB2361B98FD56D63517DC9 /* DemoBackend.swift */,
+				3C031DF73C16C02DC3499CB6 /* FirebaseBackend.swift */,
+				0BA2003BFFBF87D9A98A585A /* KashoutBackend.swift */,
+				0F39BD1ABAADB087E1C2D19D /* StoreManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		E0B46910255297A5C7C039BF /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				480BD6E246B1DDC839235B1E /* AuthViewModel.swift */,
+				B77E0BB046D44FBF00B899AA /* LootBoxViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		EB6DFC528BC40380DA118634 /* KashoutTests */ = {
+			isa = PBXGroup;
+			children = (
+				71B6A721222608D3E50966B5 /* DemoModeTests.swift */,
+				19A52C321D764864EF4335FC /* LootBoxTests.swift */,
+				AE0D627A41C74649C092DD07 /* UserRulesTests.swift */,
+			);
+			path = KashoutTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6ED3139836EB14BA2FE02E80 /* KashoutTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 93839386792E1EFE2B0EE626 /* Build configuration list for PBXNativeTarget "KashoutTests" */;
+			buildPhases = (
+				64C88108E99A630499F0D3EE /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				123AC00777273A2A31EF782D /* PBXTargetDependency */,
+			);
+			name = KashoutTests;
+			productName = KashoutTests;
+			productReference = 8722A583DF46C26E6ACD1784 /* KashoutTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		BDAFC3541EF40B3D3714A006 /* Kashout */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 11DD5BAAB4F91D87081B2F71 /* Build configuration list for PBXNativeTarget "Kashout" */;
+			buildPhases = (
+				DB1EFB975DFB4E907D1D3C93 /* Sources */,
+				9B47C79EC21DB3050947BB10 /* Frameworks */,
+				D96E42276244F164A9179558 /* Copy Firebase config if present */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Kashout;
+			packageProductDependencies = (
+				3C782FFFD7D9AB6FC5971782 /* FirebaseCore */,
+				4A57DDF3ED8AE6AA807A4642 /* FirebaseAuth */,
+				DA3F1C2A3B4832916AEE89F8 /* FirebaseFirestore */,
+				DCA14FC414FD1291DF198D1A /* GoogleMobileAds */,
+			);
+			productName = Kashout;
+			productReference = 47AFF547AC2637F920221B18 /* Kashout.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5B8346F8BF9EAE0A56B38620 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 6F397A68DB05B46AF6F3D168 /* Build configuration list for PBXProject "Kashout" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 0B7DE72A0738CC8A609BBFB2;
+			packageReferences = (
+				573A43A5194150F8B8F9C5ED /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				583079650A586A14B505CD21 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+			);
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BDAFC3541EF40B3D3714A006 /* Kashout */,
+				6ED3139836EB14BA2FE02E80 /* KashoutTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D96E42276244F164A9179558 /* Copy Firebase config if present */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Firebase config if present";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PLIST=\"${SRCROOT}/Kashout/GoogleService-Info.plist\"\nDEST=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleService-Info.plist\"\nif [ -f \"$PLIST\" ]; then\n  cp \"$PLIST\" \"$DEST\"\n  echo \"Kashout: bundled GoogleService-Info.plist (Firebase mode)\"\nelse\n  rm -f \"$DEST\"\n  echo \"Kashout: no GoogleService-Info.plist found, the app will run in demo mode\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		64C88108E99A630499F0D3EE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0226930A7D93330ABFD41D99 /* DemoModeTests.swift in Sources */,
+				D8AA1A7FC6EB807EE3483689 /* LootBoxTests.swift in Sources */,
+				1DBC599F3BC34FBD4A7B6F8C /* UserRulesTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB1EFB975DFB4E907D1D3C93 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				115E81B9B9699921E63B2C7B /* AdManager.swift in Sources */,
+				719EA44C982D6A6E910B92D0 /* AppEnvironment.swift in Sources */,
+				1E256D903FD0B46E267BB16F /* AuthViewModel.swift in Sources */,
+				679C125B4500E61286C90E5A /* Constants.swift in Sources */,
+				6FD308D2F0420B700D4C8460 /* DemoBackend.swift in Sources */,
+				10F0EEBCEE296376F70465E5 /* DemoModeViews.swift in Sources */,
+				62C1B928E79A4CC3D46E91F4 /* FirebaseBackend.swift in Sources */,
+				37249616EC0D3973F798C0E3 /* HomeView.swift in Sources */,
+				B4DEB246E96E6D0486FD9BBE /* KashoutApp.swift in Sources */,
+				CE126F655356440EDC84563A /* KashoutBackend.swift in Sources */,
+				21B1121F32E8280592867C44 /* LootBox.swift in Sources */,
+				6BDECBCD2FD9F66C4A4C4AE6 /* LootBoxRevealView.swift in Sources */,
+				31D3F159C99ACB1586609CA6 /* LootBoxViewModel.swift in Sources */,
+				4D54A79BC8549B4CBF50A156 /* OnboardingView.swift in Sources */,
+				F9C21431306E8FA0D5A2BBFC /* RewardsView.swift in Sources */,
+				991FB5015A53513024D4AD47 /* SettingsView.swift in Sources */,
+				A70A72B93241DDE52EDE1073 /* StoreManager.swift in Sources */,
+				E8642FBB1F530CEDDE02B802 /* SubscriptionView.swift in Sources */,
+				2D4FBC88E1A9212DB64F9A72 /* User.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		123AC00777273A2A31EF782D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BDAFC3541EF40B3D3714A006 /* Kashout */;
+			targetProxy = 85203CAC483E33B74E8D2B37 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		18A96CB99EAC279C94366731 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		302209D3B97F2DE3FD065662 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kashout.app.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kashout.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Kashout";
+			};
+			name = Release;
+		};
+		4D0844E5A00669C07F45A5E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kashout.app.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kashout.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Kashout";
+			};
+			name = Debug;
+		};
+		7CE516CB77B4D4BEAEF6E69C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Kashout/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = "$(inherited) -ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kashout.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		8B87F29F96FF5A0571B2CBD9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Kashout/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = "$(inherited) -ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kashout.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		93B271B313C4E063AA429685 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		11DD5BAAB4F91D87081B2F71 /* Build configuration list for PBXNativeTarget "Kashout" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8B87F29F96FF5A0571B2CBD9 /* Debug */,
+				7CE516CB77B4D4BEAEF6E69C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		6F397A68DB05B46AF6F3D168 /* Build configuration list for PBXProject "Kashout" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18A96CB99EAC279C94366731 /* Debug */,
+				93B271B313C4E063AA429685 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		93839386792E1EFE2B0EE626 /* Build configuration list for PBXNativeTarget "KashoutTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D0844E5A00669C07F45A5E0 /* Debug */,
+				302209D3B97F2DE3FD065662 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		573A43A5194150F8B8F9C5ED /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = exactVersion;
+				version = 13.1.1;
+			};
+		};
+		583079650A586A14B505CD21 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads";
+			requirement = {
+				kind = exactVersion;
+				version = 13.11.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3C782FFFD7D9AB6FC5971782 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 573A43A5194150F8B8F9C5ED /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		4A57DDF3ED8AE6AA807A4642 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 573A43A5194150F8B8F9C5ED /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		DA3F1C2A3B4832916AEE89F8 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 573A43A5194150F8B8F9C5ED /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		DCA14FC414FD1291DF198D1A /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 583079650A586A14B505CD21 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 5B8346F8BF9EAE0A56B38620 /* Project object */;
+}
